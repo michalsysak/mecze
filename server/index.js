@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { MongoClient } = require('mongodb');
 const cors = require('cors');
+const { MongoClient, ObjectId } = require('mongodb');
 
 const app = express();
 app.use(cors());
@@ -70,6 +70,39 @@ app.get('/matches/:country', async (req, res) => {
         await client.close();
     }
 });
+
+// Usuń mecz po ID
+app.delete('/matches_del/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        // Sprawdź format ID
+        if (!ObjectId.isValid(id)) {
+            console.error(`Niepoprawny format ID: ${id}`);
+            return res.status(400).send('Niepoprawny format ID.');
+        }
+
+        await client.connect();
+        console.log('Połączono z bazą danych.');
+        const database = client.db(dbName);
+        const collection = database.collection(collectionName);
+
+        // Usunięcie meczu
+        const result = await collection.deleteOne({ _id: new ObjectId(id) });
+
+        if (result.deletedCount === 0) {
+            res.status(404).send('Mecz nie został znaleziony.');
+        } else {
+            res.status(200).send('Mecz został usunięty.');
+        }
+    } catch (err) {
+        console.error(`Błąd serwera: ${err.message}`);
+        res.status(500).send(`Błąd serwera: ${err.message}`);
+    } finally {
+        await client.close();
+    }
+});
+
 
 // Uruchomienie serwera
 app.listen(8080, () => {
