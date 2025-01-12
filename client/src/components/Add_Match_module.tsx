@@ -56,7 +56,7 @@ function Add_Match_module() {
     };
 
     return (
-        <div>
+        <div className="add_matches">
             <h2>Dodaj nowy mecz</h2>
             <form onSubmit={handleSubmit}>
                 <div>

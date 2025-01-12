@@ -92,8 +92,8 @@ function Matches_Table() {
     };
 
     return (
-        <div>
-            <div>
+        <div className="matches_table">
+            <div className="search-container">
                 <input
                     type="text"
                     value={searchCountry}

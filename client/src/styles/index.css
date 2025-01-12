@@ -1,0 +1,221 @@
+/* Globalne ustawienia */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Nagłówek (header) */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+header h1 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+/* Główna zawartość strony (main) */
+main {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* Nawigacja */
+nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    gap: 20px;
+}
+nav {
+    margin-bottom: 20px;
+}
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 5px 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+nav a.active {
+    color: white;
+    background-color: #a5c771;
+    border-radius: 5px;
+}
+nav a:hover {
+    color: white;
+    background-color: #7eaf34;
+    border-radius: 5px;
+}
+
+
+/* footer */
+footer {
+    text-align: center;
+    padding: 10px 20px;
+    margin-top: auto; /* Wypycha stopkę na dół */
+    flex-shrink: 0; /* Zapobiega kurczeniu się stopki */
+}
+
+/* Stylizacja zawartości strony: matches_table */
+.matches_table {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Stylizacja tabeli */
+.search-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.search-container input[type="text"] {
+    flex: 1;
+    max-width: 400px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.search-container button {
+    padding: 10px 20px;
+    background-color: #a5c771;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+.search-container button:hover {
+    background-color: #7eaf34;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+thead th {
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+td button {
+    background-color: #c55441;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+td button:hover {
+    background-color: #ff0000;
+}
+td[colspan] {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+}
+
+/* Stylizacja zawartości strony: add_matches */
+.add_matches {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 40vh;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.add_matches h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+.add_matches form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+.add_matches form div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.add_matches input {
+    width: 80%;
+    padding: 15px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.add_matches label {
+    font-size: 1em;
+    margin-bottom: 5px;
+    color: #555;
+    text-align: center; /* Wyrównanie tekstu w etykiecie */
+}
+.add_matches input:focus {
+    outline: none;
+    border-color: #7eaf34;
+    box-shadow: 0 0 5px rgba(126, 175, 52, 0.5);
+}
+.add_matches button {
+    padding: 15px 15px;
+    background-color: #a5c771;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+.add_matches button:hover {
+    background-color: #7eaf34;
+}
+.add_matches p {
+    margin-top: 20px;
+    font-size: 1em;
+    color: #333;
+    text-align: center;
+}
