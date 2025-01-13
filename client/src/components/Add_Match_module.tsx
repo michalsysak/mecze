@@ -9,8 +9,14 @@ interface NewMatch {
     awayScore: number;
 }
 
+const VALID_TEAMS = [
+    "katar", "ekwador", "senegal", "holandia", "anglia", "iran", "stany zjednoczone", "walia",
+    "argentyna", "arabia saudyjska", "meksyk", "polska", "francja", "australia", "dania", "tunezja",
+    "hiszpania", "kostaryka", "niemcy", "japonia", "belgia", "kanada", "maroko", "chorwacja", "brazylia",
+    "serbia", "szwajcaria", "kamerun", "portugalia", "ghana", "urugwaj", "korea południowa"
+];
+
 function Add_Match_module() {
-    // Stany do przechowywania danych formularza
     const [match, setMatch] = useState<NewMatch>({
         date: '',
         homeTeam: '',
@@ -19,20 +25,49 @@ function Add_Match_module() {
         awayScore: 0,
     });
 
-    const [message, setMessage] = useState<string>(''); // Komunikat o statusie dodania meczu
+    const [message, setMessage] = useState<string>('');
 
     // Obsługuje zmiany w polach formularza
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setMatch(prev => ({
             ...prev,
-            [name]: name.includes('Score') ? Number(value) : value // Wyniki jako liczby
+            [name]: name.includes('Score') ? Number(value) : value
         }));
+    };
+
+    // Walidacja danych wejściowych
+    const validateForm = (): string | null => {
+        const currentDate = new Date().toISOString().split('T')[0];
+
+        if (new Date(match.date) > new Date(currentDate)) {
+            return 'Data meczu nie może być z przyszłości.';
+        }
+
+        if (!VALID_TEAMS.includes(match.homeTeam.toLowerCase())) {
+            return `Drużyna gospodarzy (${match.homeTeam}) musi być jednym z dozwolonych państw.`;
+        }
+
+        if (!VALID_TEAMS.includes(match.awayTeam.toLowerCase())) {
+            return `Drużyna gości (${match.awayTeam}) musi być jednym z dozwolonych państw.`;
+        }
+
+        if (match.homeScore < 0 || match.awayScore < 0) {
+            return 'Wynik meczu nie może być ujemny.';
+        }
+
+        return null;
     };
 
     // Obsługuje wysyłanie danych do backendu
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault(); // Zatrzymuje domyślne odświeżenie strony
+        e.preventDefault();
+
+        const validationError = validateForm();
+        if (validationError) {
+            setMessage(validationError);
+            return;
+        }
 
         try {
             const response = await fetch('http://localhost:8080/matches', {
@@ -45,7 +80,7 @@ function Add_Match_module() {
 
             if (response.ok) {
                 setMessage('Mecz został dodany pomyślnie!');
-                setMatch({ date: '', homeTeam: '', awayTeam: '', homeScore: 0, awayScore: 0 }); // Reset formularza
+                setMatch({ date: '', homeTeam: '', awayTeam: '', homeScore: 0, awayScore: 0 });
             } else {
                 setMessage('Wystąpił błąd podczas dodawania meczu.');
             }

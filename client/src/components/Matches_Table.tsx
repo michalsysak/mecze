@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 // Interfejs meczu
 interface Match {
-    id: string; // ID jako string dla React
+    id: string;
     date: string;
     homeTeam: string;
     awayTeam: string;
@@ -11,9 +11,9 @@ interface Match {
 }
 
 function Matches_Table() {
-    const [matches, setMatches] = useState<Match[]>([]); // Stan do przechowywania danych
-    const [sortColumn, setSortColumn] = useState<string>('date'); // Kolumna sortowania
-    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc'); // Kolejność sortowania
+    const [matches, setMatches] = useState<Match[]>([]);
+    const [sortColumn, setSortColumn] = useState<string>('date');
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const [searchCountry, setSearchCountry] = useState('');
 
     // Pobieranie danych z REST API
@@ -28,7 +28,7 @@ function Matches_Table() {
             .then(data => {
                 // Mapowanie _id na id dla React
                 const mappedData = data.map((match: any) => ({
-                    id: match._id, // Mapowanie _id na id
+                    id: match._id,
                     date: match.date,
                     homeTeam: match.homeTeam,
                     awayTeam: match.awayTeam,
@@ -61,23 +61,6 @@ function Matches_Table() {
     };
 
     // Funkcja do sortowania
-    const handleSort = (column: string) => {
-        const order = sortColumn === column && sortOrder === 'asc' ? 'desc' : 'asc';
-        setSortColumn(column);
-        setSortOrder(order);
-
-        const sortedMatches = [...matches].sort((a, b) => {
-            if (a[column as keyof Match] < b[column as keyof Match]) {
-                return order === 'asc' ? -1 : 1;
-            }
-            if (a[column as keyof Match] > b[column as keyof Match]) {
-                return order === 'asc' ? 1 : -1;
-            }
-            return 0;
-        });
-        setMatches(sortedMatches);
-    };
-
     const handleSearch = async () => {
         try {
             const response = await fetch(`http://localhost:8080/matches/${searchCountry}`);
@@ -85,10 +68,32 @@ function Matches_Table() {
                 throw new Error('Błąd podczas pobierania danych');
             }
             const data = await response.json();
-            setMatches(data); // Bez dodatkowego przetwarzania
+            // Mapowanie danych
+            const mappedData = data.map((match: any) => ({
+                id: match._id,
+                date: match.date,
+                homeTeam: match.homeTeam,
+                awayTeam: match.awayTeam,
+                homeScore: match.homeScore,
+                awayScore: match.awayScore,
+            }));
+            setMatches(mappedData);
         } catch (error) {
             console.error('Błąd:', error);
         }
+    };
+
+    const handleSort = (column: keyof Match) => {
+        const order = sortColumn === column && sortOrder === 'asc' ? 'desc' : 'asc';
+        setSortColumn(column);
+        setSortOrder(order);
+
+        const sortedMatches = [...matches].sort((a, b) => {
+            if (a[column] < b[column]) return order === 'asc' ? -1 : 1;
+            if (a[column] > b[column]) return order === 'asc' ? 1 : -1;
+            return 0;
+        });
+        setMatches(sortedMatches);
     };
 
     return (
