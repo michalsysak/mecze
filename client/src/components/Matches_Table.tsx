@@ -122,8 +122,8 @@ function Matches_Table() {
                     matches.map((match) => (
                         <tr key={match.id}>
                             <td>{match.date}</td>
-                            <td>{match.homeTeam}</td>
-                            <td>{match.awayTeam}</td>
+                            <td>{match.homeTeam.charAt(0).toUpperCase() + match.homeTeam.slice(1).toLowerCase()}</td>
+                            <td>{match.awayTeam.charAt(0).toUpperCase() + match.awayTeam.slice(1).toLowerCase()}</td>
                             <td>{match.homeScore} - {match.awayScore}</td>
                             <td>
                                 <button onClick={() => deleteMatch(match.id)}>Usuń</button>

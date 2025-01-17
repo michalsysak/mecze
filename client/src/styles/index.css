@@ -169,12 +169,12 @@ td[colspan] {
     align-items: center;
     justify-content: center;
     background-color: white;
-    padding: 20px;
+    padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 500px;
     width: 100%;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 .add_matches form div {
     display: flex;
@@ -189,11 +189,28 @@ td[colspan] {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+.add_matches select {
+    width: 85%;
+    padding: 15px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    color: #333;
+    appearance: none; /* Usuwa domyślny styl strzałki w niektórych przeglądarkach */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+.add_matches select:focus {
+    outline: none;
+    border-color: #7eaf34;
+    box-shadow: 0 0 5px rgba(126, 175, 52, 0.5);
+}
 .add_matches label {
     font-size: 1em;
     margin-bottom: 5px;
     color: #555;
-    text-align: center; /* Wyrównanie tekstu w etykiecie */
+    text-align: center;
 }
 .add_matches input:focus {
     outline: none;

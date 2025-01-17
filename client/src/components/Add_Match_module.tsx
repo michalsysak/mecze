@@ -28,12 +28,22 @@ function Add_Match_module() {
     const [message, setMessage] = useState<string>('');
 
     // Obsługuje zmiany w polach formularza
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
         const { name, value } = e.target;
-        setMatch(prev => ({
-            ...prev,
-            [name]: name.includes('Score') ? Number(value) : value
-        }));
+
+        // Resetowanie `awayTeam` przy zmianie `homeTeam`
+        if (name === 'homeTeam') {
+            setMatch(prev => ({
+                ...prev,
+                [name]: value,
+                awayTeam: prev.awayTeam === value ? '' : prev.awayTeam,
+            }));
+        } else {
+            setMatch(prev => ({
+                ...prev,
+                [name]: name.includes('Score') ? Number(value) : value,
+            }));
+        }
     };
 
     // Walidacja danych wejściowych
@@ -50,6 +60,10 @@ function Add_Match_module() {
 
         if (!VALID_TEAMS.includes(match.awayTeam.toLowerCase())) {
             return `Drużyna gości (${match.awayTeam}) musi być jednym z dozwolonych państw.`;
+        }
+
+        if (match.homeTeam.toLowerCase() === match.awayTeam.toLowerCase()) {
+            return 'Drużyna gospodarzy i gości nie mogą być takie same.';
         }
 
         if (match.homeScore < 0 || match.awayScore < 0) {
@@ -106,23 +120,36 @@ function Add_Match_module() {
                 </div>
                 <div>
                     <label>Gospodarze:</label>
-                    <input
-                        type="text"
+                    <select
                         name="homeTeam"
                         value={match.homeTeam}
                         onChange={handleChange}
                         required
-                    />
+                    >
+                        <option value="">-- Wybierz drużynę --</option>
+                        {VALID_TEAMS.map(team => (
+                            <option key={team} value={team}>
+                                {team.charAt(0).toUpperCase() + team.slice(1)}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div>
                     <label>Goście:</label>
-                    <input
-                        type="text"
+                    <select
                         name="awayTeam"
                         value={match.awayTeam}
                         onChange={handleChange}
                         required
-                    />
+                        disabled={!match.homeTeam}
+                    >
+                        <option value="">-- Wybierz drużynę --</option>
+                        {VALID_TEAMS.filter(team => team !== match.homeTeam).map(team => (
+                            <option key={team} value={team}>
+                                {team.charAt(0).toUpperCase() + team.slice(1)}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div>
                     <label>Wynik gospodarzy:</label>
@@ -132,6 +159,7 @@ function Add_Match_module() {
                         value={match.homeScore}
                         onChange={handleChange}
                         required
+                        min="0"
                     />
                 </div>
                 <div>
@@ -142,6 +170,7 @@ function Add_Match_module() {
                         value={match.awayScore}
                         onChange={handleChange}
                         required
+                        min="0"
                     />
                 </div>
                 <button type="submit">Dodaj mecz</button>
