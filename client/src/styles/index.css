@@ -61,11 +61,11 @@ nav a:hover {
 footer {
     text-align: center;
     padding: 10px 20px;
-    margin-top: auto; /* Wypycha stopkę na dół */
-    flex-shrink: 0; /* Zapobiega kurczeniu się stopki */
+    margin-top: auto;
+    flex-shrink: 0;
 }
 
-/* Stylizacja zawartości strony: matches_table */
+/*  matches_table */
 .matches_table {
     display: flex;
     flex-direction: column;
@@ -179,7 +179,7 @@ td[colspan] {
 .add_matches form div {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
 }
 .add_matches input {
@@ -197,7 +197,7 @@ td[colspan] {
     border-radius: 5px;
     background-color: white;
     color: #333;
-    appearance: none; /* Usuwa domyślny styl strzałki w niektórych przeglądarkach */
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
 }
@@ -210,7 +210,8 @@ td[colspan] {
     font-size: 1em;
     margin-bottom: 5px;
     color: #555;
-    text-align: center;
+    text-align: left;
+    width: 100%;
 }
 .add_matches input:focus {
     outline: none;

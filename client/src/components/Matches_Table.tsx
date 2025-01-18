@@ -63,7 +63,8 @@ function Matches_Table() {
     // Funkcja do sortowania
     const handleSearch = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/matches/${searchCountry}`);
+
+            const response = await fetch(`http://localhost:8080/matches/${searchCountry.trim().toLowerCase()}`);
             if (!response.ok) {
                 throw new Error('Błąd podczas pobierania danych');
             }

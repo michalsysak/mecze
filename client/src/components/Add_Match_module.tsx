@@ -31,7 +31,6 @@ function Add_Match_module() {
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
         const { name, value } = e.target;
 
-        // Resetowanie `awayTeam` przy zmianie `homeTeam`
         if (name === 'homeTeam') {
             setMatch(prev => ({
                 ...prev,
